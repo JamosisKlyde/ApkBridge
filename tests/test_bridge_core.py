@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 from __future__ import annotations
 
 import importlib.util

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 """Session-only KDE fullscreen support. No persistent window rules or root access."""
 import json
 from pathlib import Path

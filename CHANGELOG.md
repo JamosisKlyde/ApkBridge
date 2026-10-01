@@ -1,3 +1,11 @@
+# Repository and release information update — 2026-09-30
+
+- Added GPL-3.0-only licensing, copyright notices, and third-party license information.
+- Added requirements, support, security reporting, privacy, and contributor documentation.
+- Added issue/PR templates and read-only CI for Python 3.10 and 3.12.
+- Added legal attachments and a source ZIP with notices to v0.1.3.
+- The v0.1.3 tag, application behavior, original installer, and its checksum remain unchanged.
+
 # 0.1.3
 
 - Fullscreen now switches Waydroid out of multi-window mode and clears fixed display dimensions.

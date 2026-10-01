@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 """APKBridge graphical desktop application."""
 
 from __future__ import annotations

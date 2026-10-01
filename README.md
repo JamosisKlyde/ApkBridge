@@ -1,12 +1,50 @@
 # APKBridge
 
-Run Android APKs on Linux through Waydroid. Current preview: **0.1.3**.
+Run Android APKs on Linux through Waydroid. Current preview: **0.1.3**. Licensed under **GPL-3.0-only**.
 
-[Download the Linux installer](https://github.com/JamosisKlyde/ApkBridge/raw/refs/heads/main/downloads/APKBridge-0.1.3_Display_Fix.run) · [Changelog](CHANGELOG.md)
+[![Tests](https://github.com/JamosisKlyde/ApkBridge/actions/workflows/ci.yml/badge.svg)](https://github.com/JamosisKlyde/ApkBridge/actions/workflows/ci.yml)
+
+Maintained by [JamosisKlyde](https://github.com/JamosisKlyde).
+
+[Download the Linux installer](https://github.com/JamosisKlyde/ApkBridge/releases/download/v0.1.3/APKBridge-0.1.3_Display_Fix.run) · [All releases](https://github.com/JamosisKlyde/ApkBridge/releases) · [Changelog](CHANGELOG.md) · [Help](SUPPORT.md)
 
 ```bash
 bash ~/Downloads/APKBridge-0.1.3_Display_Fix.run
 ```
+
+## Requirements and support
+
+| Requirement | Details |
+| --- | --- |
+| Operating system | Linux with a Wayland desktop; not a Windows/macOS APK emulator |
+| Confirmed setup | Fedora 44, KDE Plasma, AMD x86-64; fullscreen fix confirmed by the user |
+| Other distributions | Fedora, Ubuntu/Debian, and Arch setup paths exist but are not all validated; immutable Fedora systems need a reboot after package layering |
+| Android runtime | Working Waydroid installation and Android image; hardware/kernel support follows Waydroid requirements |
+| Python / GUI | Python 3.10+; PyQt6 6.5 or later in the 6.x series (QtDBus included) |
+| Fullscreen integration | KDE Plasma 6 / KWin |
+| Permissions / network | Normal installation is per user. Waydroid setup and optional ARM changes need administrator approval and downloads. |
+
+If Waydroid is not ready, use **Setup & Repair** in APKBridge. After installing an
+APK, you can create a normal application-menu shortcut with **Create App Shortcut**.
+
+### Verify the download
+
+Download both the installer and `SHA256SUMS.txt` from the same release into one
+folder, then run this in that folder before installing:
+
+```bash
+sha256sum --check SHA256SUMS.txt
+```
+
+Checksums verify matching bytes; releases are not digitally signed. The
+installer also contains source; use the following command to inspect it without installing:
+
+```bash
+bash APKBridge-0.1.3_Display_Fix.run --extract-only ./apkbridge-source
+```
+
+License and dependency notices are attached separately to the original v0.1.3
+release, and its additional source ZIP includes them.
 
 ## Fullscreen update
 
@@ -105,12 +143,20 @@ Uninstalling APKBridge does not uninstall Waydroid or delete Waydroid's Android 
 - Launcher: `~/.local/bin/apkbridge`
 - App-menu entry: `~/.local/share/applications/apkbridge.desktop`
 
-## Source status
+## License and project policies
 
-This is a development preview. No open-source license has been selected for APKBridge yet.
+APKBridge's original code, scripts, documentation, and artwork are licensed under
+[GNU GPL version 3 only](LICENSE), including the original v0.1.3 program. This
+permits commercial use under the GPL's terms. Third-party components and Android
+apps retain their own licenses; see [LICENSING.md](LICENSING.md) and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Run the regression tests with Python 3 and Node.js installed:
+- [Support and troubleshooting](SUPPORT.md)
+- [Security reporting](SECURITY.md)
+- [Local data and network behavior](PRIVACY.md)
+- [Contributing and development tests](CONTRIBUTING.md)
+- [Release maintenance](RELEASING.md)
 
-```bash
-python3 -m unittest discover -s tests -v
-```
+Report bugs or request features in [GitHub Issues](https://github.com/JamosisKlyde/ApkBridge/issues).
+APKBridge is an independent community project; it is not affiliated with or
+endorsed by Waydroid, Qt, Riverbank, or Android.

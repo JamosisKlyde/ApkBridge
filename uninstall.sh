@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 set -euo pipefail
 
 apkbridge_data="${HOME}/.local/share/apkbridge"

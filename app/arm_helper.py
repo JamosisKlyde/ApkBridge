@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 """Privileged, opt-in ARM translation manager for APKBridge.
 
 The translation files are not bundled with APKBridge.  With explicit user

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 """Backend and command-line interface for APKBridge.
 
 APKBridge is a desktop front-end for Waydroid.  This module intentionally keeps

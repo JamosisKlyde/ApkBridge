@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Setup and troubleshooting
+    url: https://github.com/JamosisKlyde/ApkBridge/blob/main/SUPPORT.md
+    about: Installation, fullscreen, and diagnostics help
+  - name: Security reporting
+    url: https://github.com/JamosisKlyde/ApkBridge/blob/main/SECURITY.md
+    about: Read before sharing vulnerability details

@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a reproducible APKBridge problem
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Read SUPPORT.md first. Redact logs. Do not upload APKs, passwords, tokens, or sensitive data. For vulnerabilities, see SECURITY.md."
+  - type: input
+    id: version
+    attributes:
+      label: APKBridge version
+      placeholder: "0.1.3"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: System and Android environment
+      description: Linux version, desktop, Wayland/X11, Waydroid version, CPU architecture, ARM translation, and app package/version if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps, expected result, and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted Activity Log or diagnostics
+      render: text

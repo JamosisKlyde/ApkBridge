@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 JamosisKlyde and APKBridge contributors
 set -euo pipefail
 
 apkbridge_archive_line="$(awk '/^__APKBRIDGE_ARCHIVE_BELOW__$/ { print NR + 1; exit }' "$0")"

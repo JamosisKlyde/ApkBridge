@@ -1,0 +1,70 @@
+name: Complete v0.1.3 release information
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/release-info-v0.1.3.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-v0.1.3
+  cancel-in-progress: false
+jobs:
+  information:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check the original release and installer
+        run: |
+          test "$(git rev-parse v0.1.3^{commit})" = 755916fadb92d5696a0db5f91ea14db61380f7f6
+          cd downloads
+          sha256sum --check SHA256SUMS.txt
+      - name: Package original source with legal notices
+        run: |
+          mkdir -p /tmp/apkbridge-source/APKBridge-0.1.3
+          git archive v0.1.3 app packaging tests install-or-update.sh uninstall.sh CHANGELOG.md README.md | tar -x -C /tmp/apkbridge-source/APKBridge-0.1.3
+          cp LICENSE LICENSING.md THIRD_PARTY_NOTICES.md README.md SUPPORT.md SECURITY.md PRIVACY.md CONTRIBUTING.md RELEASING.md requirements.txt /tmp/apkbridge-source/APKBridge-0.1.3/
+          python3 - <<'PY'
+          import hashlib
+          import zipfile
+          from pathlib import Path
+          source = Path('/tmp/apkbridge-source')
+          out = Path('/tmp/APKBridge-0.1.3_Source_with_Notices.zip')
+          with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as archive:
+              for path in sorted(source.rglob('*')):
+                  if path.is_file():
+                      archive.write(path, path.relative_to(source))
+          Path('/tmp/SOURCE_SHA256SUMS.txt').write_text(hashlib.sha256(out.read_bytes()).hexdigest() + '  ' + out.name + '\n')
+          PY
+      - name: Attach notices and update release description
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh release view v0.1.3 --json body --jq .body > /tmp/release-notes.md
+          python3 - <<'PY'
+          from pathlib import Path
+          notes = Path('/tmp/release-notes.md')
+          text = notes.read_text()
+          marker = '<!-- apkbridge-licensing-notes -->'
+          if marker in text:
+              text = text.split(marker, 1)[0].rstrip()
+          text += '''
+
+          <!-- apkbridge-licensing-notes -->
+          ### License and project information
+          APKBridge is licensed under **GNU GPL version 3 only (GPL-3.0-only)**, including this release's original program code. See the attached LICENSE, LICENSING.md, and THIRD_PARTY_NOTICES.md. Dependencies and installed Android apps keep their own licenses.
+
+          The original installer and tag are unchanged. APKBridge-0.1.3_Source_with_Notices.zip contains the original tagged program source with the legal and project documentation added. SOURCE_SHA256SUMS.txt verifies that source ZIP; SHA256SUMS.txt verifies the installer.
+
+          [Requirements and installation](https://github.com/JamosisKlyde/ApkBridge#requirements-and-support) · [Troubleshooting](https://github.com/JamosisKlyde/ApkBridge/blob/main/SUPPORT.md) · [Security reporting](https://github.com/JamosisKlyde/ApkBridge/blob/main/SECURITY.md) · [Contributing](https://github.com/JamosisKlyde/ApkBridge/blob/main/CONTRIBUTING.md)
+          '''
+          notes.write_text(text)
+          PY
+          gh release upload v0.1.3 LICENSE LICENSING.md THIRD_PARTY_NOTICES.md /tmp/APKBridge-0.1.3_Source_with_Notices.zip /tmp/SOURCE_SHA256SUMS.txt --clobber
+          gh release edit v0.1.3 --notes-file /tmp/release-notes.md

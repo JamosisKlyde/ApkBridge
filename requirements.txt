@@ -1,0 +1,3 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Matches the installer's fallback GUI dependency. Prefer distribution packages when available.
+PyQt6>=6.5,<7
