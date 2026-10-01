@@ -1,0 +1,74 @@
+name: Publish APKBridge v0.1.3
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/release-v0.1.3.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-v0.1.3
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the validated version
+        uses: actions/checkout@v4
+        with:
+          ref: 755916fadb92d5696a0db5f91ea14db61380f7f6
+          persist-credentials: false
+      - name: Run regression tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Verify installer checksum
+        working-directory: downloads
+        run: sha256sum --check SHA256SUMS.txt
+      - name: Write release notes
+        run: |
+          cat > /tmp/apkbridge-release-notes.md <<'NOTES'
+          ## APKBridge 0.1.3 — Fullscreen display fix
+
+          Run Android APKs on Linux through Waydroid.
+
+          ### Changes
+          - Added Enter Fullscreen and Exit Fullscreen controls.
+          - Fullscreen switches Waydroid out of multi-window mode and removes fixed display dimensions.
+          - Exit restores the saved window profile and dimensions.
+          - Display changes preserve app compatibility settings and relaunch the selected app.
+
+          ### Install or update
+          Download APKBridge-0.1.3_Display_Fix.run below, close APKBridge, then run:
+
+          ```bash
+          bash ~/Downloads/APKBridge-0.1.3_Display_Fix.run
+          ```
+
+          Existing APKBridge settings and Android data are preserved.
+
+          ### Fullscreen
+          Select your app in APKBridge and click Enter Fullscreen. Changing display mode can restart Android and close running Android apps. Save your progress first. Use Alt+Tab to return to APKBridge and click Exit Fullscreen. Portrait-only apps may retain side bars.
+
+          ### Validation
+          All 13 regression tests pass. The fullscreen fix was confirmed working by the user on their KDE/Waydroid setup on September 30, 2026.
+
+          SHA256SUMS.txt contains the installer checksum. This is a development preview; Android app compatibility varies.
+          NOTES
+      - name: Create release and attach downloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if gh release view v0.1.3 >/dev/null 2>&1; then
+            echo "Release v0.1.3 already exists; preserving it."
+            exit 0
+          fi
+          gh release create v0.1.3 \
+            --target 755916fadb92d5696a0db5f91ea14db61380f7f6 \
+            --title "APKBridge 0.1.3 — Fullscreen Display Fix" \
+            --notes-file /tmp/apkbridge-release-notes.md \
+            --draft \
+            downloads/APKBridge-0.1.3_Display_Fix.run \
+            downloads/SHA256SUMS.txt
+          gh release edit v0.1.3 --draft=false --latest
