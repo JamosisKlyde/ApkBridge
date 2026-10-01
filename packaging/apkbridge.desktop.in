@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=APKBridge
+GenericName=Android APK Launcher
+Comment=Install and run Android APKs as Linux desktop applications
+Exec=@LAUNCHER@ %f
+TryExec=@LAUNCHER@
+Icon=apkbridge
+Terminal=false
+Categories=Utility;Emulator;
+MimeType=application/vnd.android.package-archive;application/vnd.android.package;
+StartupNotify=true
+Keywords=Android;APK;Waydroid;Emulator;Launcher;

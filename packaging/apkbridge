@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+apkbridge_root="${HOME}/.local/share/apkbridge"
+apkbridge_python="/usr/bin/python3"
+if [[ -x "${apkbridge_root}/venv/bin/python3" ]]; then
+  apkbridge_python="${apkbridge_root}/venv/bin/python3"
+fi
+exec "${apkbridge_python}" "${apkbridge_root}/app/apkbridge.py" "$@"

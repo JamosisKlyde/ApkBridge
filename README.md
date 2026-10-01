@@ -18,7 +18,7 @@ Use Alt+Tab to return to APKBridge and click Exit Fullscreen. It restores the sa
 
 This corrects an error in 0.1.1/0.1.2: those versions changed the KDE window state while keeping Android in multi-window mode at a fixed resolution. A portrait-only app can still retain side bars or portrait layout. No forced stretching or orientation override is applied.
 
-Tested with backend regression tests, simulated KWin windows, and offscreen Qt button checks. Actual KDE/Waydroid rendering cannot be verified in the build environment.
+Validated with backend regression tests, simulated KWin windows, and offscreen Qt button checks. The user confirmed the fullscreen fix works on their KDE/Waydroid setup on September 30, 2026.
 
 Reference: https://docs.waydro.id/usage/waydroid-prop-options
 
